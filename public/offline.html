@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline Movies</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #222;
+      color: #fff;
+    }
+    .movie-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      padding: 16px;
+    }
+    .movie-card {
+      background: #333;
+      padding: 8px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .movie-card img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .placeholder {
+      text-align: center;
+      margin-top: 50px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; padding: 16px;">Offline Movies</h1>
+  <div class="movie-list" id="movie-list">
+    <p class="placeholder">Loading cached movies...</p>
+  </div>
+
+  <script>
+    async function loadCachedMovies() {
+      if (!("caches" in window)) {
+        document.getElementById("movie-list").innerHTML = "<p>Cache not supported.</p>";
+        return;
+      }
+
+      try {
+        const cache = await caches.open("movie-data-cache");
+        console.log("Cache opened:", cache);
+        const cachedResponse = await cache.match("/popular-movies");
+        console.log("Cached response:", cachedResponse);
+
+        if (!cachedResponse) {
+          document.getElementById("movie-list").innerHTML = "<p class='placeholder'>No cached movies available.</p>";
+          return;
+        }
+
+        const movies = await cachedResponse.json();
+
+        const movieList = document.getElementById("movie-list");
+        movieList.innerHTML = "";
+        movies.forEach((movie) => {
+          const movieCard = document.createElement("div");
+          movieCard.className = "movie-card";
+          movieCard.innerHTML = `
+            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" />
+            <p>${movie.title}</p>
+          `;
+          movieList.appendChild(movieCard);
+        });
+      } catch (error) {
+        console.error("Error loading cached movies:", error);
+        document.getElementById("movie-list").innerHTML = "<p class='placeholder'>Failed to load cached movies.</p>";
+      }
+    }
+
+    loadCachedMovies();
+  </script>
+</body>
+</html>
