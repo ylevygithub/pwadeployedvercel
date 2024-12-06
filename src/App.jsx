@@ -4,7 +4,6 @@ import MainLayout from './layouts/MainLayout';
 import HomePage from './pages/HomePage';
 import FavoritesPage from './pages/FavoritesPage';
 import { useEffect } from "react";
-import { SpeedInsights } from "@vercel/speed-insights/react"
 
 function App() {
   useEffect(() => {
@@ -24,7 +23,6 @@ function App() {
 
   return (
     <AuthProvider>
-      <SpeedInsights/>
       <Router>
         <Routes>
           <Route path="/" element={<MainLayout />}>
