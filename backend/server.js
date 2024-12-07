@@ -54,7 +54,7 @@ const sslOptions = {
 };
 
 // Démarrer le serveur HTTPS
-const PORT_HTTPS = process.env.PORT_HTTPS || 5001;
+const PORT_HTTPS = 5001;
 https.createServer(sslOptions, app).listen(PORT_HTTPS, () => {
   console.log(`HTTPS Server running on port ${PORT_HTTPS}`);
 });
