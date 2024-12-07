@@ -21,12 +21,12 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Redirection HTTP -> HTTPS (facultatif)
-app.use((req, res, next) => {
-  if (req.protocol === 'http') {
-    return res.redirect(301, `https://${req.headers.host}${req.url}`);
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   if (req.protocol === 'http') {
+//     return res.redirect(301, `https://${req.headers.host}${req.url}`);
+//   }
+//   next();
+// });
 
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url} - Body:`, req.body);
