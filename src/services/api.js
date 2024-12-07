@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:5001/api';
+const API_URL = 'https://pwadeployedvercel.vercel.app/api';
+// const API_URL = 'https://localhost:5001/api';
 
 export const api = {
   async login(email, password) {
