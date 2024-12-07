@@ -60,20 +60,18 @@ app.use((err, req, res, next) => {
 });
 
 // HTTPS Configuration
-const sslOptions = {
-  key: fs.readFileSync('../selfsigned.key'), 
-  cert: fs.readFileSync('../selfsigned.crt') 
-};
+// const sslOptions = {
+//   key: fs.readFileSync('../selfsigned.key'), 
+//   cert: fs.readFileSync('../selfsigned.crt') 
+// };
 
 // Démarrer le serveur HTTPS
 const PORT = process.env.PORT;
 
-https.createServer(sslOptions, app).listen(PORT, () => {
-  console.log(`HTTPS Server running on port ${PORT}`);
-});
-
-// Facultatif : Démarrer un serveur HTTP (pour redirection ou tests)
-// const PORT_HTTP = process.env.PORT_HTTP || 5001;
-// app.listen(PORT_HTTP, () => {
-//   console.log(`HTTP Server running on port ${PORT_HTTP}`);
+// https.createServer(sslOptions, app).listen(PORT, () => {
+//   console.log(`HTTPS Server running on port ${PORT}`);
 // });
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
