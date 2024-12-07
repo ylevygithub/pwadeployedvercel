@@ -28,6 +28,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url} - Body:`, req.body);
+  next();
+});
+
 // Connect to MongoDB (ne changez rien ici si ça fonctionnait avant)
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS: 30000 })
   .then(() => console.log('Connected to MongoDB'))
@@ -54,9 +59,10 @@ const sslOptions = {
 };
 
 // Démarrer le serveur HTTPS
-const PORT_HTTPS = 5001;
-https.createServer(sslOptions, app).listen(PORT_HTTPS, () => {
-  console.log(`HTTPS Server running on port ${PORT_HTTPS}`);
+const PORT = process.env.PORT || 5001;
+
+https.createServer(sslOptions, app).listen(PORT, () => {
+  console.log(`HTTPS Server running on port ${PORT}`);
 });
 
 // Facultatif : Démarrer un serveur HTTP (pour redirection ou tests)
