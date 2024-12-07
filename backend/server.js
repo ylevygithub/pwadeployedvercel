@@ -4,17 +4,13 @@ const express = require('express');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const cors = require('cors');
-const authRoutes = require('./routes/auth');
-const movieRoutes = require('./routes/movies');
-const userRoutes = require('./routes/users');
-
-const app = express();
 const corsOptions = {
   origin: 'https://pwadeployedvercel.vercel.app', // Remplacez par l'URL de votre frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
 
+const app = express();
 
 // Middleware
 app.options('*', cors(corsOptions)); // Autorise toutes les requêtes préflight
@@ -29,10 +25,20 @@ app.use(express.json());
 //   next();
 // });
 
+const authRoutes = require('./routes/auth');
+const movieRoutes = require('./routes/movies');
+const userRoutes = require('./routes/users');
+
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url} - Body:`, req.body);
   next();
 });
+
+app.use((req, res, next) => {
+  console.log(`CORS middleware executed for ${req.method} ${req.url}`);
+  next();
+});
+
 
 // Connect to MongoDB (ne changez rien ici si ça fonctionnait avant)
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, serverSelectionTimeoutMS: 30000 })
