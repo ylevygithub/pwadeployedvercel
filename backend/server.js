@@ -17,6 +17,7 @@ const corsOptions = {
 
 
 // Middleware
+app.options('*', cors(corsOptions)); // Autorise toutes les requêtes préflight
 app.use(cors(corsOptions));
 app.use(express.json());
 
