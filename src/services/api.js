@@ -1,4 +1,4 @@
-const API_URL = 'https://pwadeployedvercel.vercel.app/api';
+const API_URL = 'https://pwadeployedvercelbackend.onrender.com/api';
 // const API_URL = 'https://localhost:5001/api';
 
 export const api = {
